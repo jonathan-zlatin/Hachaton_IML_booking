@@ -47,7 +47,7 @@ if __name__ == '__main__':
     estimator = DecisionTreeClassifier(max_depth=1)
     DecisionTreeClassifier()
     for i in list([50, 100, 200, 300, 500]):
-        model = BaselineModel(ModelType.CLASSIFIER, estimator, i)
+        model = BaselineModel(estimator, i)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         error.append(model.loss(X_test, y_test))
