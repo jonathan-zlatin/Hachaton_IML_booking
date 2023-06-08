@@ -11,21 +11,30 @@ pio.renderers.default = 'browser'
 
 
 def preprocess(X: pd.DataFrame, y: pd.DataFrame):
-    # Has correlation with nationality
+
+    # Convert the 'checkin_date' and 'booking_datetime' columns to datetime type
+    X['checkin_date'] = pd.to_datetime(X['checkin_date'])
+    X['booking_datetime'] = pd.to_datetime(X['booking_datetime'])
+
+    # Calculate the difference in days between 'checkin_date' and 'booking_datetime'
+    X['days_before_checkin'] = (X['checkin_date'] - X['booking_datetime']).dt.days + 1
+
     X.drop(["h_customer_id", "customer_nationality", "origin_country_code", "h_booking_id",
             "language", "original_payment_method", "original_payment_currency", "is_user_logged_in",
             "cancellation_policy_code", "hotel_area_code", "booking_datetime", "checkin_date", "checkout_date",
             "hotel_live_date", "request_nonesmoke", 'request_latecheckin', "request_highfloor", "request_twinbeds",
             "request_airport","request_earlycheckin", "request_largebed","hotel_country_code", "charge_option",
-            "guest_nationality_country_name", "original_payment_type",
+            "guest_nationality_country_name",
             "hotel_brand_code", "hotel_chain_code", "hotel_city_code"
             ], axis=1, inplace=True)
-    X["accommadation_type_name"] = np.where(X["accommadation_type_name"].isin["Hotel",
-    "Guest House / Bed & Breakfast", "Hostel", "Resort"], X["accommadation_type_name"], 'other')
+
+    X["accommadation_type_name"] = np.where(X["accommadation_type_name"].isin(["Hotel",
+    "Guest House / Bed & Breakfast", "Hostel", "Resort"]), X["accommadation_type_name"], 'other')
     X["charge_option"] = np.where(X["accommadation_type_name"] == "Pay at Check-in", "Pay Later",
                                   X["accommadation_type_name"])
-    X["original_payment_type"] = np.where(X["original_payment_type"].isin["Visa",
-    "MasterCard", "American Express"], X["accommadation_type_name"], 'other')
+    X["original_payment_type"] = np.where(X["original_payment_type"].isin(["Visa",
+                                                                           "MasterCard", "American Express"]),
+                                          X["accommadation_type_name"], 'other')
 
     X = pd.get_dummies(X, columns=["accommadation_type_name", "charge_option", "original_payment_type"])
     return X, y[X.index]
