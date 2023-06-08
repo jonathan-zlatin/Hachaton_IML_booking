@@ -46,4 +46,3 @@ if __name__ == '__main__':
     sns.heatmap(corr, annot=True, cmap=plt.cm.Reds, linewidth=.5)
     print(corr)
     plt.show()
-

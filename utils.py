@@ -1,5 +1,20 @@
 import re
 
+def format_N2P(num: int, unit: str, invitation: pd.Series)
+    price = invitation["original_selling_amount"]
+
+    # Calculate the number of days the customer ordered
+    # change to dt format
+    invitation['checkin_date'] = invitation.to_datetime(invitation['checkin_date'])
+    invitation['checkout_date'] = invitation.to_datetime(invitation['checkout_date'])
+
+    days_stay = (invitation['checkout_date'] - invitation['checkin_date']).dt.days
+    price_pr_night = price / days_stay
+
+    # calculate the ratio price
+    total_pay = price_pr_night * num
+    percent = int((total_pay / price) * 100)
+    return percent
 
 def validate_format(policy_format: str) -> bool:
     # regex = re.compile(r"")
