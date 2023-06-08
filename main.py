@@ -7,11 +7,7 @@ from ModelBaseline import BaselineModel
 import plotly.graph_objects as go
 import plotly.io as pio
 from sklearn.tree import DecisionTreeClassifier
-from enum import Enum
 pio.renderers.default = 'browser'
-class ModelType(Enum):
-    CLASSIFIER = 0,
-    REGRESSION = 1
 
 
 def preprocess(X: pd.DataFrame, y: pd.DataFrame):
