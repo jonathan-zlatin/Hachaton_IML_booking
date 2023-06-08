@@ -55,26 +55,59 @@ def parse_policy_part(policy: str) -> tuple:
 
 def parse_cancellation_policy(policy: str) -> list[tuple]:
     policy_parts = policy.split("_")
-    return [
+    policy_parts = [
         parse_policy_part(policy_part) for policy_part in policy_parts
     ]
+    if len(policy_parts) == 1:
+        if len(policy_parts[0]) == 3:  # No show
+            policy_parts.append((policy_parts[0][1], policy_parts[0][2]))
+    return policy_parts
 
 
-def convert_policy_part_to_percent(policy_part: tuple, row: pd.Series):
-    unit = policy_part[-1]
-    if unit == "N":
-        if len(policy_part) == 2:
-            return format_N2P(policy_part[0], row), "P"
-        return policy_part[0], format_N2P(policy_part[1], row), "P"
-    return policy_part
+def convert_policy_parts_to_percent(policy_parts: list[tuple], row: pd.Series) -> list:
+    # Expects len of list >= 2
+    temp = [0, 0, 0, 0, 0]
+    i = 0
+    for policy_part in reversed(policy_parts):
+        unit = policy_part[-1]
+        x = format_N2P(policy_part[-2], row) if unit == "N" else policy_part[-2]
+        temp[i] = x
+        i += 1
+        if len(policy_part) == 3:
+            temp[i] = policy_part[-3]
+            i += 1
+    return temp
 
+
+def convert_tuples_to_list(tuples: list[tuple]) -> list:
+    temp = [0, 0, 0, 0, 0]
+    # for i, parsed in enumerate(reversed(tuples)):
+    #     if len(parsed) == 2:  # No show fine
+    #         temp[0] = parsed[0]
+    #     elif len(parsed) == 3:
+    #         if i == 1:
+    #             temp[1] = parsed[0]
+    #             temp[2] = parsed[1]
+    #         elif i == 2:
+    #             temp[3] = parsed[0]
+    #             temp[4] = parsed[1]
+    # if temp[0] <= temp[2]:
+    #     temp[0] = temp[2]
+    i = 0
+    for parsed in reversed(tuples):
+        temp[i] = parsed[0]
+        i += 1
+        if len(parsed) == 3:
+            temp[i] = parsed[1]
+            i += 1
+    return temp
 
 def calculate_score(row: pd.Series) -> int:
     cancellation_policy = parse_cancellation_policy(row["cancellation_policy_code"])
-    cancellation_policy = np.array([
-        convert_policy_part_to_percent(policy_part, row)
-        for policy_part in cancellation_policy
-    ])
+    # cancellation_policy = np.array([
+    #     convert_policy_part_to_percent(policy_part, row)
+    #     for policy_part in cancellation_policy
+    # ])
     cancellation_policy = list(filter(
         lambda policy_part: len(policy_part) == 3
     , cancellation_policy))
@@ -82,10 +115,41 @@ def calculate_score(row: pd.Series) -> int:
         d * p for d, p, _ in cancellation_policy
     ])
 
+def convert_cancellation_code_to_columns(df: pd.DataFrame) -> pd.DataFrame:
+    df["cancellation_policy_code"] = np.where(
+        df["cancellation_policy_code"] == "UNKNOWN", "0P", df["cancellation_policy_code"]
+    )
+    df["cancellation_policy_code"] = df.apply(
+        lambda row: convert_policy_parts_to_percent(parse_cancellation_policy(
+            row["cancellation_policy_code"]
+        ), row), axis=1
+    )
+    df = df.join(pd.DataFrame(df.pop("cancellation_policy_code").values.tolist()).rename(columns={
+        0: "no_show_fine", 1: "first_fine", 2: "first_period", 3: "second_fine", 4: "second_period"
+    }))
+    return df
+
+
+# def fill_empty_fines(df: pd.DataFrame) -> pd.DataFrame:
+#     df["second_period"] = np.where(df["second_period"].isnull(), 0, df["second_period"])
+#     df["second_fine"] = np.where(df["second_fine"].isnull(), 0, df["second_fine"])
+#     df["first_period"] = np.where(df["first_period"].isnull(), 0, df["first_period"])
+#     df["first_fine"] = np.where(df["first_fine"].isnull(), df["second_fine"], df["first_fine"])
+#     df["no_show_fine"] = np.where(df["no_show_fine"].isnull(), df["first_fine"], df["no_show_fine"])
+#     return df
+
+
+def bla_format_N2P(nights, row: pd.Series):
+    format_N2P(nights, row)
+
+# def bla_convert_to_percent(parsed, row):
+#     convert_policy_part_to_percent(parsed, row)
+
 
 if __name__ == "__main__":
     res = parse_policy_part("1D1N")
     df = pd.read_csv('agoda_cancellation_train.csv')
+    # bla_convert_to_percent((1, "N"), df.loc[445])
     row = df.iloc[7]
     parsed = parse_cancellation_policy(row["cancellation_policy_code"])
     parsed = parsed[0]
@@ -93,3 +157,7 @@ if __name__ == "__main__":
     print("{}P".format(result))
     score = calculate_score(row)
     print(score)
+    # convert_cancellation_code_to_columns(df["cancellation_policy_code"])
+    df = convert_cancellation_code_to_columns(df)
+    # fill_empty_fines(df)
+    convert_tuples_to_list([(365, 100, "P"), (100, "P")])
