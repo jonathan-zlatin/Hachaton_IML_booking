@@ -1,10 +1,9 @@
-from sklearn import tree
-
-
+from sklearn.ensemble import AdaBoostClassifier
+from sklearn.ensemble import AdaBoostRegressor
 class BaselineModel:
-    def __init__(self, max_depth):
-        self.clf = tree.DecisionTreeClassifier(max_depth=max_depth)
-        self.max_depth = max_depth
+    def __init__(self, type, estimator, n_estimators):
+        self.clf = AdaBoostClassifier(base_estimator=estimator, n_estimators=n_estimators)
+        # self.clf = AdaBoostRegressor(base_estimator=estimator, n_estimators=n_estimators)
 
     def fit(self, X, y):
         self.clf = self.clf.fit(X, y)
