@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-
 import plotly.io as pio
 from sklearn import linear_model
 pio.renderers.default = 'browser'

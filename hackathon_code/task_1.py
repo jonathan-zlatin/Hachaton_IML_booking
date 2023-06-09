@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-import utils
+from hackathon_code import utils
 from sklearn.tree import DecisionTreeClassifier
-from ModelBaseline import BaselineModel
+from hackathon_code.ModelBaseline import BaselineModel
 import plotly.io as pio
 
 pio.renderers.default = 'browser'
