@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
-import task_1
-import task_2
+from hackathon_code import task_1
+from hackathon_code import task_2
 import plotly.io as pio
 import sys
 
