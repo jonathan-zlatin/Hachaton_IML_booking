@@ -25,7 +25,7 @@ def parse_policy_part(policy: str) -> tuple:
     no_show_pattern = re.compile(r"([0-9]{1,3})([N,P])")
     if (first_match := cancel_ahead_pattern.match(policy)) is None:
         if (second_match := no_show_pattern.match(policy)) is None:
-            return None, None, None
+            return 0, "P"
         return int(second_match.group(1)), second_match.group(2)
     return int(first_match.group(1)), int(first_match.group(3)), first_match.group(4)
 

@@ -1,0 +1,5 @@
+main.py - to run T1, T2, and T3
+task_1.py - for T1
+task_2.py - for T2
+utils.py -  functions to be used in preprocesses for T1 and T2
+ModelBaseline.py - generic class to fit, predict and calculate loss for different models
