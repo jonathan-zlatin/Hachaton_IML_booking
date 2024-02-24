@@ -9,6 +9,16 @@ pio.renderers.default = 'browser'
 
 
 def replace_none_with_samples(data, dict):
+    """
+        Replace None values in the DataFrame with generated samples from the given dictionary.
+
+        Args:
+        - data (pd.DataFrame): The DataFrame to be processed.
+        - dict (dict): Dictionary containing generated samples for each column.
+
+        Returns:
+        - pd.DataFrame: The DataFrame with None values replaced by generated samples.
+        """
     # Iterate over each column
     for column in data.columns:
         # Replace None values with the generated samples
@@ -18,7 +28,19 @@ def replace_none_with_samples(data, dict):
 
 
 def preprocess(X: pd.DataFrame, y: pd.DataFrame, dict):
-    # change None values
+    """
+        Preprocess the input DataFrame for task 1.
+
+        Args:
+        - X (pd.DataFrame): The input DataFrame.
+        - y (pd.DataFrame): The target DataFrame.
+        - dict (dict): Dictionary containing generated samples for each column.
+
+        Returns:
+        - pd.DataFrame: Preprocessed input DataFrame X.
+        - pd.DataFrame: Target DataFrame y.
+        """
+    # Replace None values
     X = replace_none_with_samples(X, dict)
     # Convert the 'checkin_date' and 'booking_datetime' columns to datetime type
     X['checkin_date'] = pd.to_datetime(X['checkin_date'])
@@ -53,6 +75,15 @@ def preprocess(X: pd.DataFrame, y: pd.DataFrame, dict):
 
 
 def get_mean_dictionary(data):
+    """
+        Generate a dictionary with mean values for each column.
+
+        Args:
+        - data (pd.DataFrame): The input DataFrame.
+
+        Returns:
+        - dict: Dictionary containing mean values for each column.
+        """
     # Iterate over each column
     dict = {}
     for column in data.columns:
@@ -62,6 +93,16 @@ def get_mean_dictionary(data):
 
 
 def run_task_1(df: pd.DataFrame, dict: dict):
+    """
+        Run task 1.
+
+        Args:
+        - df (pd.DataFrame): The input DataFrame.
+        - dict (dict): Dictionary containing mean values for each column.
+
+        Returns:
+        - BaselineModel: Trained BaselineModel for task 1.
+        """
     X, y = df.drop("cancellation_datetime", axis=1), df["cancellation_datetime"]
     y = np.where(y.isnull(), 0, 1)
     X_train, y_train = preprocess(X, y, dict)

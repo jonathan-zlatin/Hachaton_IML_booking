@@ -6,6 +6,16 @@ pio.renderers.default = 'browser'
 
 
 def replace_none_with_samples(data, dict):
+    """
+       Replace None values in the DataFrame with generated samples from the given dictionary.
+
+       Args:
+       - data (pd.DataFrame): The DataFrame to be processed.
+       - dict (dict): Dictionary containing generated samples for each column.
+
+       Returns:
+       - pd.DataFrame: The DataFrame with None values replaced by generated samples.
+       """
     # Iterate over each column
     for column in data.columns:
         # Replace None values with the generated samples
@@ -15,6 +25,19 @@ def replace_none_with_samples(data, dict):
 
 
 def preprocess(X: pd.DataFrame, y: pd.DataFrame, dict):
+    """
+        Preprocess the input DataFrame for task 2.
+
+        Args:
+        - X (pd.DataFrame): The input DataFrame.
+        - y (pd.DataFrame): The target DataFrame.
+        - dict (dict): Dictionary containing generated samples for each column.
+
+        Returns:
+        - pd.DataFrame: Preprocessed input DataFrame X.
+        - pd.DataFrame: Target DataFrame y.
+        """
+
     # change None values
     X = replace_none_with_samples(X, dict)
     # Convert the 'checkin_date' and 'booking_datetime' columns to datetime type
@@ -32,6 +55,7 @@ def preprocess(X: pd.DataFrame, y: pd.DataFrame, dict):
             "guest_nationality_country_name",
             "hotel_brand_code", "hotel_chain_code", "hotel_city_code"], axis=1, inplace=True)
 
+    # Group similar categories
     X["accommadation_type_name"] = np.where(X["accommadation_type_name"].isin(["Hotel",
                                                                                "Guest House / Bed & Breakfast",
                                                                                "Hostel", "Resort"]),
@@ -39,7 +63,8 @@ def preprocess(X: pd.DataFrame, y: pd.DataFrame, dict):
     X["charge_option"] = np.where(X["charge_option"] == "Pay at Check-in", "Pay Later",
                                   X["charge_option"])
     X["original_payment_method"] = np.where(X["original_payment_method"].isin(["Visa",
-                                                                               "MasterCard", "American Express"]),
+                                                                               "MasterCard",
+                                                                               "American Express"]),
                                             X["original_payment_method"], 'other')
 
     X = pd.get_dummies(X, columns=["accommadation_type_name", "charge_option", "original_payment_type",
@@ -50,15 +75,34 @@ def preprocess(X: pd.DataFrame, y: pd.DataFrame, dict):
 
 
 def get_mean_dictionary(data):
-    # Iterate over each column
-    dict = {}
-    for column in data.columns:
-        dict[column] = data[column].value_counts().index[0]
+    """
+        Generate a dictionary with mean values for each column.
 
-    return dict
+        Args:
+        - data (pd.DataFrame): The input DataFrame.
+
+        Returns:
+        - dict: Dictionary containing mean values for each column.
+        """
+    # Iterate over each column
+    _dict = {}
+    for column in data.columns:
+        _dict[column] = data[column].value_counts().index[0]
+
+    return _dict
 
 
 def run_task_2(df: pd.DataFrame, dict: dict):
+    """
+        Run task 2.
+
+        Args:
+        - df (pd.DataFrame): The input DataFrame.
+        - dict (dict): Dictionary containing mean values for each column.
+
+        Returns:
+        - Ridge: Trained Ridge model for task 2.
+        """
     X, y = df.drop("cancellation_datetime", axis=1), df["cancellation_datetime"]
     X, y = X.drop("original_selling_amount", axis=1), X["original_selling_amount"]
     X, y = preprocess(X, y, dict)
