@@ -47,16 +47,16 @@ if __name__ == '__main__':
     # Save the DataFrame to a CSV file
     cost_of_cancellation_predictions.to_csv("agoda_cost_of_cancellation.csv", index=False)
 
-    # # Q3
-    # pearsons = list()
-    # params = list()
-    # for param in df:
-    #     pearson_corr = np.cov(df[param], is_cancel)[0, 1] / (np.std(df[param]) * np.std(is_cancel))
-    #     pearsons.append(pearson_corr)
-    #     params.append(param)
-    #     print(f"The Pearson corr of {param} is : {pearson_corr}")
-    #
-    # max_ = np.argmax(pearsons)
-    # min_ = np.argmin(pearsons)
-    # print(f"And The Winner Is {params[max_]} with pearson corr of : {np.max(pearsons)}")
-    # print(f"And The Losser Is {params[min_]} with pearson corr of : {np.min(pearsons)}")
+    # Q3
+    pearsons = list()
+    params = list()
+    for param in df:
+        pearson_corr = np.cov(df[param], is_cancel)[0, 1] / (np.std(df[param]) * np.std(is_cancel))
+        pearsons.append(pearson_corr)
+        params.append(param)
+        print(f"The Pearson corr of {param} is : {pearson_corr}")
+
+    max_ = np.argmax(pearsons)
+    min_ = np.argmin(pearsons)
+    print(f"And The Winner Is {params[max_]} with pearson corr of : {np.max(pearsons)}")
+    print(f"And The Losser Is {params[min_]} with pearson corr of : {np.min(pearsons)}")
