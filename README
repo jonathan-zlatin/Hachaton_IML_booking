@@ -1,18 +1,32 @@
 # Agoda Cancellation Prediction Program
 
-This repository contains the source code for predicting hotel booking cancellations and estimating the cost of cancellation for Agoda, a leading online travel agency. The program utilizes Python and various libraries for data processing, modeling, and visualization.
+This repository contains the source code for predicting hotel booking cancellations and estimating 
+the cost of cancellation for Agoda, a leading online travel agency. The program utilizes Python 
+and various libraries for data processing, modeling, and visualization.
 
 ## Project Overview
 
-The primary objective of this project is to develop predictive models to assist Agoda in optimizing their operations related to hotel booking cancellations. Hotel booking cancellations can significantly impact revenue and operational efficiency for travel agencies. By accurately predicting cancellations and estimating the potential cost associated with them, Agoda can implement proactive measures to mitigate their effects and enhance customer satisfaction.
+The primary objective of this project is to develop predictive models to assist Agoda in optimizing their
+operations related to hotel booking cancellations. Hotel booking cancellations can significantly impact
+revenue and operational efficiency for travel agencies. By accurately predicting cancellations and 
+estimating the potential cost associated with them, Agoda can implement proactive measures to mitigate
+their effects and enhance customer satisfaction.
 
-Through the utilization of machine learning techniques and data analysis, this project aims to achieve the following goals:
+Through the utilization of machine learning techniques and data analysis, this project aims to
+achieve the following goals:
 
-1. **Cancellation Prediction**: Develop a model capable of accurately predicting hotel booking cancellations based on various features such as booking details, customer information, and hotel characteristics. This model can help Agoda anticipate cancellations in advance, allowing them to manage inventory effectively and optimize resource allocation.
+1. **Cancellation Prediction**: Develop a model capable of accurately predicting hotel booking 
+cancellations based on various features such as booking details, customer information, and hotel
+characteristics. This model can help Agoda anticipate cancellations in advance, allowing them to 
+manage inventory effectively and optimize resource allocation.
 
-2. **Cost Estimation**: Estimate the potential cost incurred by hotel booking cancellations, enabling Agoda to assess the financial impact and make informed decisions regarding pricing strategies, refund policies, and revenue management.
+2. **Cost Estimation**: Estimate the potential cost incurred by hotel booking cancellations, 
+enabling Agoda to assess the financial impact and make informed decisions regarding pricing 
+strategies, refund policies, and revenue management.
 
-3. **Operational Efficiency**: Improve the overall operational efficiency of Agoda by providing insights into factors influencing cancellations and cost implications. By understanding the underlying patterns and trends, Agoda can implement targeted strategies to minimize cancellations and maximize revenue.
+3. **Operational Efficiency**: Improve the overall operational efficiency of Agoda by providing
+insights into factors influencing cancellations and cost implications. By understanding the underlying 
+patterns and trends, Agoda can implement targeted strategies to minimize cancellations and maximize revenue.
 
 ## Prerequisites
 
@@ -78,7 +92,7 @@ Both tasks involve preprocessing of input data, including handling missing value
 
 ## Contributors
 
-- [Your Name]
+Jonathan Zlatin
 
 ## License
 
