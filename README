@@ -1,36 +1,18 @@
 # Agoda Cancellation Prediction Program
 
-This repository contains the source code for predicting hotel booking cancellations and estimating 
-the cost of cancellation for Agoda, a leading online travel agency. The program utilizes Python 
-and various libraries for data processing, modeling, and visualization.
+This repository contains the source code for predicting hotel booking cancellations and estimating the cost of cancellation for Agoda, an online travel agency. The program uses Python and various libraries for data processing, modeling, and visualization.
 
 ## Project Overview
 
-The primary objective of this project is to develop predictive models to assist Agoda in optimizing their
-operations related to hotel booking cancellations. Hotel booking cancellations can significantly impact
-revenue and operational efficiency for travel agencies. By accurately predicting cancellations and 
-estimating the potential cost associated with them, Agoda can implement proactive measures to mitigate
-their effects and enhance customer satisfaction.
+The project aims to develop models to assist Agoda in predicting hotel booking cancellations and estimating the associated costs. The goals are:
 
-Through the utilization of machine learning techniques and data analysis, this project aims to
-achieve the following goals:
-
-1. **Cancellation Prediction**: Develop a model capable of accurately predicting hotel booking 
-cancellations based on various features such as booking details, customer information, and hotel
-characteristics. This model can help Agoda anticipate cancellations in advance, allowing them to 
-manage inventory effectively and optimize resource allocation.
-
-2. **Cost Estimation**: Estimate the potential cost incurred by hotel booking cancellations, 
-enabling Agoda to assess the financial impact and make informed decisions regarding pricing 
-strategies, refund policies, and revenue management.
-
-3. **Operational Efficiency**: Improve the overall operational efficiency of Agoda by providing
-insights into factors influencing cancellations and cost implications. By understanding the underlying 
-patterns and trends, Agoda can implement targeted strategies to minimize cancellations and maximize revenue.
+1. **Cancellation Prediction**: Develop a model to predict cancellations based on booking details, customer information, and hotel characteristics.
+2. **Cost Estimation**: Estimate the potential cost of cancellations to aid in decision-making regarding pricing and refund policies.
+3. **Operational Efficiency**: Provide insights to improve Agoda's operational efficiency by understanding cancellation patterns and cost implications.
 
 ## Prerequisites
 
-Before running the program, ensure you have the following dependencies installed:
+Ensure you have the following dependencies installed:
 
 - Python 3.x
 - pandas
@@ -40,7 +22,7 @@ Before running the program, ensure you have the following dependencies installed
 
 ## Installation
 
-Clone the repository to your local machine:
+Clone the repository:
 
 ```bash
 git clone <repository_url>
@@ -48,50 +30,40 @@ git clone <repository_url>
 
 ## Usage
 
-To use the program, follow these steps:
-
 1. Navigate to the repository directory.
-2. Ensure you have the necessary CSV files (`agoda_cancellation_train.csv`, `Agoda_Test_1.csv`, `Agoda_Test_2.csv`) in the same directory.
-3. Run the program using Python:
+2. Ensure the necessary CSV files (`agoda_cancellation_train.csv`, `Agoda_Test_1.csv`, `Agoda_Test_2.csv`) are in the same directory.
+3. Run the program:
 
 ```bash
 python main.py Agoda_Test_1.csv Agoda_Test_2.csv
 ```
 
-Replace `Agoda_Test_1.csv` and `Agoda_Test_2.csv` with the paths to your test data CSV files.
+Replace `Agoda_Test_1.csv` and `Agoda_Test_2.csv` with your test data paths.
 
 ## Description
 
 ### Files
 
-- `main.py`: Main script for executing the program.
-- `hackathon_code/`: Directory containing Python modules for task execution.
-    - `task_1.py`: Module for predicting hotel booking cancellations.
-    - `task_2.py`: Module for estimating the cost of cancellation.
-    - `utils.py`: Utility functions used in preprocessing.
+- `main.py`: Main script.
+- `hackathon_code/`: Contains modules for task execution.
+    - `task_1.py`: Predicts cancellations.
+    - `task_2.py`: Estimates cancellation costs.
+    - `utils.py`: Utility functions.
     - `ModelBaseline.py`: Baseline model implementation.
 
 ### Task Execution
 
-The program performs the following tasks:
-
 1. **Task 1: Predicting Cancellations**
-    - Reads the training data from `agoda_cancellation_train.csv`.
-    - Trains a decision tree classifier to predict cancellations.
-    - Preprocesses test data (`Agoda_Test_1.csv`).
-    - Saves the cancellation predictions to `agoda_cancellation_prediction.csv`.
+    - Trains a decision tree classifier.
+    - Saves predictions to `agoda_cancellation_prediction.csv`.
 
 2. **Task 2: Estimating Cost of Cancellation**
-    - Trains a Ridge regression model to estimate the cost of cancellation.
-    - Preprocesses test data (`Agoda_Test_2.csv`).
-    - Saves the estimated cost of cancellation to `agoda_cost_of_cancellation.csv`.
-
-### Preprocessing
-
-Both tasks involve preprocessing of input data, including handling missing values, converting data types, and encoding categorical features.
+    - Trains a Ridge regression model.
+    - Saves cost estimates to `agoda_cost_of_cancellation.csv`.
 
 ## Contributors
 
-Jonathan Zlatin
-Tomer-Gil
-alon0uzan
+- Alon Uzan
+- Yael Yanuka
+- Jonathan Zlatin
+- Tomer Gil
